@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verschwörungstheorien — Archiv der Irrtümer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0b08;
+    --surface: #141209;
+    --card: #1a1710;
+    --border: #2a2520;
+    --accent-red: #c0392b;
+    --accent-amber: #d4a017;
+    --accent-green: #2e7d32;
+    --accent-blue: #1565c0;
+    --text-primary: #e8e0d0;
+    --text-secondary: #9a9080;
+    --text-muted: #5a5248;
+    --risk-low: #2e7d32;
+    --risk-medium: #f57c00;
+    --risk-high: #c62828;
+    --risk-extreme: #880e4f;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.65;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(192,57,43,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .header-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-red);
+    margin-bottom: 1.2rem;
+    opacity: 0.85;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 0.4rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent-amber);
+  }
+
+  .header-sub {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-top: 0.8rem;
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: var(--accent-amber);
+    margin: 1.8rem auto;
+    opacity: 0.5;
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    padding: 1.4rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.015);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .stat-item span { color: var(--accent-amber); font-weight: 500; }
+
+  /* ── CONTROLS ── */
+  .controls {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,11,8,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .controls-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-right: 0.4rem;
+    white-space: nowrap;
+  }
+
+  .filter-group {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+
+  .filter-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    padding: 0.35rem 0.75rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover { border-color: var(--accent-amber); color: var(--accent-amber); }
+  .filter-btn.active { background: var(--accent-amber); border-color: var(--accent-amber); color: var(--bg); font-weight: 500; }
+
+  .sort-select {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    padding: 0.35rem 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 2px;
+    margin-left: auto;
+  }
+
+  .search-input {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    padding: 0.35rem 0.85rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    border-radius: 2px;
+    width: 180px;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus { outline: none; border-color: var(--accent-amber); }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  /* ── GRID ── */
+  .grid-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    border-color: #3a3530;
+  }
+
+  .card.hidden { display: none; }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 1.1rem 0;
+  }
+
+  .category-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.55rem;
+    border-radius: 1px;
+    border: 1px solid currentColor;
+    opacity: 0.75;
+  }
+
+  .cat-politik    { color: #5c9bd6; }
+  .cat-gesundheit { color: #66bb6a; }
+  .cat-technologie{ color: #ab47bc; }
+  .cat-umwelt     { color: #26a69a; }
+  .cat-medien     { color: #ef9a4e; }
+  .cat-geschichte { color: #ef5350; }
+  .cat-esoterik   { color: #ec407a; }
+  .cat-astronomie { color: #7986cb; }
+
+  .risk-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.55rem;
+    border-radius: 1px;
+  }
+
+  .risk-niedrig  { background: rgba(46,125,50,0.18); color: #81c784; border: 1px solid rgba(46,125,50,0.4); }
+  .risk-mittel   { background: rgba(245,124,0,0.15); color: #ffb74d; border: 1px solid rgba(245,124,0,0.4); }
+  .risk-hoch     { background: rgba(198,40,40,0.18); color: #ef9a9a; border: 1px solid rgba(198,40,40,0.4); }
+  .risk-extrem   { background: rgba(136,14,79,0.25); color: #f48fb1; border: 1px solid rgba(136,14,79,0.5); }
+
+  .card-body { padding: 0.9rem 1.1rem 0; }
+
+  .card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.18rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .card-origin {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.65rem;
+  }
+
+  .card-summary {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  /* Expandable sections */
+  .card-sections { border-top: 1px solid var(--border); }
+
+  .section-toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 0.65rem 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: background 0.15s;
+  }
+
+  .section-toggle:last-child { border-bottom: none; }
+  .section-toggle:hover { background: rgba(255,255,255,0.03); }
+
+  .section-icon { font-size: 0.75rem; transition: transform 0.25s; }
+  .section-toggle.open .section-icon { transform: rotate(180deg); }
+
+  .section-content {
+    display: none;
+    padding: 0.8rem 1.1rem 1rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    background: rgba(0,0,0,0.15);
+  }
+
+  .section-content.visible { display: block; }
+
+  .section-content ul {
+    padding-left: 1.2rem;
+    margin-top: 0.4rem;
+  }
+
+  .section-content ul li { margin-bottom: 0.3rem; }
+
+  .danger-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-red);
+    display: block;
+    margin-bottom: 0.3rem;
+    opacity: 0.8;
+  }
+
+  .belief-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.8rem 1.1rem 0.9rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .belief-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .belief-bar {
+    flex: 1;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .belief-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-amber), var(--accent-red));
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+
+  .belief-pct {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--accent-amber);
+    min-width: 2.5rem;
+    text-align: right;
+  }
+
+  /* ── NO RESULTS ── */
+  .no-results {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 5rem 2rem;
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 1.1rem;
+    display: none;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    line-height: 2;
+  }
+
+  footer a { color: var(--accent-amber); text-decoration: none; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card { animation: fadeIn 0.4s ease both; }
+
+  @media (max-width: 600px) {
+    .grid-container { grid-template-columns: 1fr; padding: 1.5rem 1rem 3rem; }
+    .controls { gap: 0.5rem; }
+    .search-input { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="header-eyebrow">Kritische Analyse · Faktenbasiert · Bildungszweck</p>
+  <h1>Archiv der <em>Irrtümer</em></h1>
+  <div class="divider"></div>
+  <p class="header-sub">Eine dokumentierte Sammlung von Verschwörungstheorien — mit Hintergründen, Widerlegungen und Risikoeinschätzungen.</p>
+</header>
+
+<div class="stats-bar">
+  <div class="stat-item">Einträge: <span id="total-count">—</span></div>
+  <div class="stat-item">Kategorien: <span>8</span></div>
+  <div class="stat-item">Risikostufen: <span>4</span></div>
+  <div class="stat-item">Stand: <span>2025</span></div>
+</div>
+
+<div class="controls">
+  <span class="controls-label">Kategorie:</span>
+  <div class="filter-group" id="cat-filters">
+    <button class="filter-btn active" data-filter="alle" data-type="cat">Alle</button>
+    <button class="filter-btn" data-filter="politik" data-type="cat">Politik</button>
+    <button class="filter-btn" data-filter="gesundheit" data-type="cat">Gesundheit</button>
+    <button class="filter-btn" data-filter="technologie" data-type="cat">Technologie</button>
+    <button class="filter-btn" data-filter="umwelt" data-type="cat">Umwelt</button>
+    <button class="filter-btn" data-filter="medien" data-type="cat">Medien</button>
+    <button class="filter-btn" data-filter="geschichte" data-type="cat">Geschichte</button>
+    <button class="filter-btn" data-filter="esoterik" data-type="cat">Esoterik</button>
+    <button class="filter-btn" data-filter="astronomie" data-type="cat">Astronomie</button>
+  </div>
+
+  <span class="controls-label" style="margin-left:0.5rem">Risiko:</span>
+  <div class="filter-group" id="risk-filters">
+    <button class="filter-btn active" data-filter="alle" data-type="risk">Alle</button>
+    <button class="filter-btn" data-filter="niedrig" data-type="risk">Niedrig</button>
+    <button class="filter-btn" data-filter="mittel" data-type="risk">Mittel</button>
+    <button class="filter-btn" data-filter="hoch" data-type="risk">Hoch</button>
+    <button class="filter-btn" data-filter="extrem" data-type="risk">Extrem</button>
+  </div>
+
+  <select class="sort-select" id="sort-select">
+    <option value="default">Sortierung: Standard</option>
+    <option value="risk-asc">Risiko: Niedrig → Hoch</option>
+    <option value="risk-desc">Risiko: Hoch → Niedrig</option>
+    <option value="belief-desc">Verbreitung: Hoch → Niedrig</option>
+    <option value="name-asc">Name A–Z</option>
+  </select>
+
+  <input class="search-input" type="text" id="search-input" placeholder="Suchen…">
+</div>
+
+<div class="grid-container" id="grid">
+  <div class="no-results" id="no-results">Keine Einträge gefunden.</div>
+</div>
+
+<footer>
+  <p>© 2025 Prince of Crows — Alle Rechte vorbehalten</p>
+  <p>Dieses Archiv dient ausschließlich der Aufklärung und kritischen Bildung.<br>
+  Die dargestellten Theorien werden nicht befürwortet.</p>
+</footer>
+
+<script>
+const theories = [
+  {
+    id: 1,
+    name: "Flache Erde",
+    category: "astronomie",
+    origin: "Antike / Wiederaufleben ca. 2010",
+    risk: "niedrig",
+    belief: 4,
+    summary: "Die Erde sei eine flache Scheibe, umgeben von einer Eiswand (Antarktis). Behörden, NASA und Regierungen würden dies vertuschen.",
+    details: "Anhänger behaupten, Fotos aus dem All seien gefälscht, Schwerkraft existiere nicht und Piloten seien Teil der Verschwörung. Die Theorie wird hauptsächlich über YouTube und Social Media verbreitet. Prominente Vertreter: Eric Dubay, der Basketballspieler Kyrie Irving.",
+    widerlegung: [
+      "Satellitendaten von Dutzenden unabhängiger Raumfahrtbehörden weltweit (ESA, ISRO, JAXA etc.) belegen die Kugelform.",
+      "Schiffe und Gebäude verschwinden am Horizont von unten nach oben — typisch für eine Kugel.",
+      "Mondfinsternis-Schatten der Erde ist stets kreisförmig, unabhängig vom Winkel.",
+      "Flüge auf der Südhalbkugel wären bei flacher Erde unmöglich kurz.",
+      "Foucaultsches Pendel zeigt die Erdrotation direkt messbar an."
+    ],
+    gefahr: "Gering. Führt kaum zu gefährlichem Handeln, fördert aber allgemeines Misstrauen in Wissenschaft."
+  },
+  {
+    id: 2,
+    name: "Impfungen verursachen Autismus",
+    category: "gesundheit",
+    origin: "Andrew Wakefield, Lancet-Studie 1998 (zurückgezogen)",
+    risk: "extrem",
+    belief: 18,
+    summary: "Der MMR-Impfstoff (Masern-Mumps-Röteln) soll Autismus auslösen. Eine bewusste Vertuschung durch Pharmafirmen und Behörden wird behauptet.",
+    details: "Andrew Wakefields Studie mit 12 Kindern wurde 2010 vollständig zurückgezogen. Er verlor seine Approbation wegen Datenfälschung und Interessenkonflikten. Trotzdem verbreitete sich die Theorie massiv, u.a. durch Jenny McCarthy in den USA.",
+    widerlegung: [
+      "Metaanalysen mit über 1,2 Millionen Kindern zeigen keinen Zusammenhang zwischen Impfung und Autismus.",
+      "Wakefield-Studie war gefälscht: er wurde von Anwälten bezahlt, die Eltern vertraten.",
+      "Autismus-Symptome werden oft im Alter der Erst-Impfung bemerkbar — ein zeitlicher Zusammenhang, kein kausaler.",
+      "Thimerosal (als angeblicher Auslöser) wurde aus Kinderimpfstoffen entfernt — Autismusraten blieben unverändert.",
+      "WHO, CDC, EMA, BfR: konsistent keine Kausalität nachweisbar."
+    ],
+    gefahr: "Extrem. Führt zu sinkenden Impfquoten und Wiederausbrüchen von Masern. Kinder sterben an vermeidbaren Krankheiten."
+  },
+  {
+    id: 3,
+    name: "9/11-Insider-Job",
+    category: "geschichte",
+    origin: "USA, ab September 2001",
+    risk: "mittel",
+    belief: 22,
+    summary: "Die US-Regierung unter George W. Bush habe die Anschläge vom 11. September 2001 selbst inszeniert oder zumindest wissentlich zugelassen, um Kriege im Nahen Osten zu rechtfertigen.",
+    details: "Varianten reichen von 'Controlled Demolition' (Sprengung der Türme) über 'kein Flugzeug ins Pentagon' bis zu NORAD-Verwicklung. Verbreitet durch Filme wie 'Loose Change'. In manchen Ländern glauben bis zu 30% der Bevölkerung daran.",
+    widerlegung: [
+      "NIST-Untersuchung, unabhängige Ingenieure und Physiker bestätigen: Feuer + strukturelle Schwäche erklären den Einsturz vollständig.",
+      "Thermitspuren wurden nicht gefunden; Behauptungen basieren auf Fehlinterpretation von Brandrückständen.",
+      "Flugzeugteile, Passagier-DNA und schwarze Boxen wurden am Pentagon und in Shanksville geborgen.",
+      "Zu viele Menschen müssten schweigen: Tausende Beteiligte über Jahrzehnte — statistisch unmöglich.",
+      "19 Entführer wurden durch Ticketkäufe, Videoüberwachung, DNA und Zeugen identifiziert."
+    ],
+    gefahr: "Mittel. Fördert Antiamerikanismus, Antisemitismus (Variante: Israel wusste Bescheid) und delegitimiert Anti-Terror-Maßnahmen."
+  },
+  {
+    id: 4,
+    name: "Chemtrails",
+    category: "umwelt",
+    origin: "USA, späte 1990er",
+    risk: "niedrig",
+    belief: 17,
+    summary: "Die weißen Kondensstreifen von Flugzeugen seien keine Wasserdampf-Kondensation, sondern absichtlich versprühte Chemikalien zur Bevölkerungskontrolle, Wettersteuerung oder Gedankenbeeinflussung.",
+    details: "Varianten beinhalten Barium, Strontium, Aluminium oder biologische Agenzien. Manche verbinden es mit HAARP oder Geoengineering. Piloten, Wissenschaftler und Flugzeugwartungspersonal weltweit müssten demnach schweigen.",
+    widerlegung: [
+      "Kondensstreifen (Contrails) sind seit 1915 dokumentiert — lange vor modernen Verschwörungsnarrativen.",
+      "Physikalisch erklärt durch Kondensation von Wasserdampf aus Triebwerken in kalter Luft (–40°C bis –60°C).",
+      "Verweildauer hängt von Luftfeuchtigkeit ab — bekanntes meteorologisches Phänomen.",
+      "Über 77 atmosphärische Wissenschaftler aus 31 Ländern: keine Belege für chemische Beimischungen.",
+      "Bodenluft, Regenwasser und Schnee wurden analysiert — Werte im normalen Rahmen."
+    ],
+    gefahr: "Gering bis mittel. Fördert Misstrauen gegenüber Luftfahrt und staatlicher Umweltpolitik. Vereinzelt Sabotagegedanken gegen Funktürme."
+  },
+  {
+    id: 5,
+    name: "Covid-19-Laborleck / Biowaffe",
+    category: "gesundheit",
+    origin: "Wuhan, China, ab Januar 2020",
+    risk: "hoch",
+    belief: 35,
+    summary: "SARS-CoV-2 sei im Wuhan Institute of Virology gezüchtet oder als Biowaffe entwickelt worden, entweder absichtlich freigesetzt oder durch einen Unfall entkommen.",
+    details: "Es gibt zwei Hauptvarianten: natürlicher Spillover (Fledermäuse → Zwischenwirt → Mensch) vs. Laborleck (Unfall im WIV). Eine dritte, weitgehend widerlegte Variante spricht von absichtlicher Freisetzung. US-Geheimdienste sind uneins über den Ursprung.",
+    widerlegung: [
+      "Das Virus zeigt keine Merkmale gezielter genetischer Manipulation — Furin-Schnittstelle kommt auch in Natur vor.",
+      "Frühere SARS-ähnliche Viren wurden in Fledermäusen der Region nachgewiesen.",
+      "WHO-Untersuchung und unabhängige Virologen: Zoonose wahrscheinlicher als Laborleck.",
+      "Laborleck-Hypothese ist nicht ausgeschlossen, aber ungeklärt — kein Beweis in beide Richtungen.",
+      "Biowaffe-Variante widerspricht dem genetischen Profil des Virus."
+    ],
+    gefahr: "Hoch. Befeuert Hass auf Asiaten, verhindert internationale Kooperation, destabilisiert Pandemiereaktion."
+  },
+  {
+    id: 6,
+    name: "New World Order / Globalelite",
+    category: "politik",
+    origin: "19. Jahrhundert, Wiederaufleben 1990er",
+    risk: "hoch",
+    belief: 28,
+    summary: "Eine geheime Weltregierung — bestehend aus Bankern, Politikern, Medienmogule — strebe eine totalitäre Einweltregierung an und steuere alle Kriege, Krisen und Wahlen.",
+    details: "Verbindet verschiedene Eliten: Rothschild-Familie, Bilderberg-Gruppe, Council on Foreign Relations, WEF. Hat starke antisemitische Unterbedeutungen. Verbreitet durch Pat Robertson, Alex Jones und viele andere.",
+    widerlegung: [
+      "Bilderberg, WEF etc. sind reale, öffentliche Organisationen mit dokumentierten Teilnehmerlisten.",
+      "Geopolitische Konkurrenz zwischen USA, China, EU widerspricht koordinierter Weltherrschaft.",
+      "Historisch: ähnliche Theorien existierten über Freimaurer, Jesuiten, Juden — nie bestätigt.",
+      "Komplexe Weltpolitik hat viele widerstreitende Akteure, keine zentrale Steuerung.",
+      "Whistleblower wären unmöglich alle zum Schweigen zu bringen."
+    ],
+    gefahr: "Hoch. Antisemitismus, Anschläge auf Regierungsgebäude, Ablehnung demokratischer Institutionen."
+  },
+  {
+    id: 7,
+    name: "Mondlandung war gefälscht",
+    category: "geschichte",
+    origin: "USA, ab 1974 (Bill Kaysing)",
+    risk: "niedrig",
+    belief: 9,
+    summary: "Die Apollo-Mondlandungen (1969–1972) seien in einem Filmstudio inszeniert worden, Stanley Kubrick habe dabei mitgewirkt. Die USA hätten im Wettlauf mit der Sowjetunion gelogen.",
+    details: "Hauptargumente: flatternde Flagge, keine Sterne auf Fotos, identische Hintergründe, Strahlenbelastung des Van-Allen-Gürtels. Popularisiert durch 'Capricorn One' (Film, 1977) und zahlreiche Dokumentationen.",
+    widerlegung: [
+      "Sowjetunion verfolgte das Apollo-Programm mit eigenem Radar — hätte sofort widersprochen, wenn Fälschung.",
+      "Mondgestein (382 kg) wurde zurückgebracht, weltweit von unabhängigen Geologen analysiert.",
+      "Retroreflektoren auf dem Mond werden bis heute von Observatorien weltweit genutzt.",
+      "Flagge flatterte kurz durch Bewegung — im Vakuum kein Wind nötig, Trägheit bleibt.",
+      "Keine Sterne: korrekte Belichtung für helle Mondoberfläche blendet Sterne aus — normale Fotografie."
+    ],
+    gefahr: "Gering. Fördert allgemeines Misstrauen, kaum direkte Handlungsfolgen."
+  },
+  {
+    id: 8,
+    name: "5G verursacht Krankheiten / Aktiviert COVID",
+    category: "technologie",
+    origin: "Europa/USA, 2019–2020",
+    risk: "hoch",
+    belief: 12,
+    summary: "5G-Mobilfunkmasten strahlen Wellen aus, die das Immunsystem schwächen, Krebs verursachen oder — in der radikalen Variante — COVID-19 aktivieren oder übertragen.",
+    details: "Verknüpft mit Bill Gates, Microchip-Theorien und Corona-Verschwörungen. In Großbritannien wurden über 90 Mobilfunkmasten in Brand gesteckt. Installateure wurden körperlich angegriffen.",
+    widerlegung: [
+      "5G nutzt nicht-ionisierende Radiowellen — weit unterhalb der Energie, um DNA zu schädigen.",
+      "Elektromagnetische Strahlung von 5G liegt deutlich unter WHO-Grenzwerten.",
+      "Viren können nicht per Funk übertragen werden — Biologie widerspricht dem grundlegend.",
+      "Länder ohne 5G (z.B. Iran 2020) hatten ebenfalls massive COVID-Ausbrüche.",
+      "Tausende unabhängige Studien weltweit: keine Kausalität zwischen Mobilfunk und Krebs nachgewiesen."
+    ],
+    gefahr: "Hoch. Physische Angriffe auf Infrastruktur und Techniker, Verhinderung wichtiger Kommunikationsinfrastruktur."
+  },
+  {
+    id: 9,
+    name: "Deep State / Schattenregierung USA",
+    category: "politik",
+    origin: "USA, verstärkt ab 2016",
+    risk: "mittel",
+    belief: 41,
+    summary: "Ein Netzwerk hochrangiger Bürokraten, Geheimdienstler und Militärs steuere die USA im Verborgenen und unterlaufe demokratisch gewählte Präsidenten.",
+    details: "Besonders durch Trump popularisiert. Bezieht sich auf reale Konzepte (bürokratische Beharrlichkeit, Geheimdienstmacht) und überhöht sie zur totalen Schattenherrschaft. QAnon übernahm und radikalisierte das Narrativ.",
+    widerlegung: [
+      "Staatliche Bürokratie mit eigenen Interessen ist real und dokumentiert — aber kein koordinierter Geheimbund.",
+      "Würde ein Deep State existieren, hätte er problemlos Ermittlungen gegen Trump verhindert — tat er nicht.",
+      "Meinungsverschiedenheiten zwischen Behörden sind öffentlich und zahlreich dokumentiert.",
+      "Medienvielfalt und Oppositionsparteien würden Belege für Schattenregierung veröffentlichen.",
+      "Reale Machtstrukturen sind komplex, widersprüchlich und ineffizient — kein Zeichen koordinierter Kontrolle."
+    ],
+    gefahr: "Mittel bis hoch. Untergräbt Vertrauen in Demokratie, befeuerte Sturm auf das Kapitol am 6. Januar 2021."
+  },
+  {
+    id: 10,
+    name: "Bill Gates — Microchip-Impfung / Bevölkerungsreduktion",
+    category: "technologie",
+    origin: "USA, ab 2020",
+    risk: "hoch",
+    belief: 20,
+    summary: "Bill Gates plane über COVID-Impfstoffe Microchips in Menschen zu injizieren, um sie zu überwachen. Gleichzeitig wolle er die Weltbevölkerung drastisch reduzieren.",
+    details: "Entstand aus Fehlinterpretation einer Gates-Aussage über digitale Impfnachweise. Kombiniert mit Gates' Aussagen zu Bevölkerungswachstum (gemeint: Bildung senkt Geburtenrate). Verbreitet über Facebook, Telegram, und YouTube.",
+    widerlegung: [
+      "mRNA-Impfstoffe enthalten keine Microchips — physikalisch und technisch unmöglich in Nadelgröße.",
+      "Keine Behörde weltweit (inkl. kritische) hat Microchip-Belege gefunden.",
+      "Gates' Aussagen zur Bevölkerung beziehen sich auf den demografischen Übergang durch Bildung und Gesundheit.",
+      "Bill Gates Foundation-Finanzen sind öffentlich einsehbar und auditiert.",
+      "Überwachung per Microchip wäre über Smartphones ohnehin nicht nötig — und Gates profitiert davon nicht."
+    ],
+    gefahr: "Hoch. Führt zu Impfverweigerung, Bedrohungen von Impfzentren und Gates-Mitarbeitern."
+  },
+  {
+    id: 11,
+    name: "Klimawandel-Lüge",
+    category: "umwelt",
+    origin: "USA, ab 1980er (fossile Industrie)",
+    risk: "extrem",
+    belief: 25,
+    summary: "Der anthropogene Klimawandel sei erfunden oder stark übertrieben, um Steuern zu erheben, Industrie zu regulieren oder eine sozialistische Weltregierung einzuführen.",
+    details: "Teils aus geleakten Dokumenten nachgewiesen: Fossilkonzerne (ExxonMobil) finanzierten gezielt Zweifelskampagnen, obwohl interne Studien den Klimawandel bereits 1977 bestätigten. Heute von Populisten weltweit aufgegriffen.",
+    widerlegung: [
+      "97%+ der Klimawissenschaftler weltweit bestätigen menschengemachten Klimawandel.",
+      "Messdaten über 150 Jahre: CO₂-Anstieg, Temperaturanstieg, Meeresspiegelanstieg, Gletscherschwund korrelieren.",
+      "Physik des Treibhauseffekts ist seit Arrhenius (1896) bekannt und vielfach bestätigt.",
+      "Eisbohrkerne, Sedimentproben und Satellitendaten aus unabhängigen Quellen stimmen überein.",
+      "Leugner-Kampagnen wurden durch interne Dokumente der Ölindustrie selbst belegt."
+    ],
+    gefahr: "Extrem. Blockiert dringend nötige Klimapolitik; führt zu gesellschaftlicher Lähmung bei existenzieller Bedrohung."
+  },
+  {
+    id: 12,
+    name: "Reptiloide Weltherrscher",
+    category: "esoterik",
+    origin: "David Icke, 1998",
+    risk: "mittel",
+    belief: 7,
+    summary: "Die globale Elite (Königsfamilien, Bankiers, Politiker) seien in Wirklichkeit formwandelnde Reptilienaliens aus einer anderen Dimension, die die Menschheit versklavten.",
+    details: "David Icke entwickelte die Theorie in 'The Biggest Secret'. Hat starke antisemitische Unterbedeutungen (historische Tropen der jüdischen Weltverschwörung). 12 Millionen Amerikaner sollen laut einer Umfrage daran glauben.",
+    widerlegung: [
+      "Kein biologischer, genetischer oder physikalischer Beweis für Formwandlung existiert.",
+      "Tausende Menschen in der Nähe von Politikern hätten Verwandlungen bemerkt.",
+      "DNA-Analysen von Politikern zeigen: 100% menschlich.",
+      "Die Theorie ist eine modernisierte Version antisemitischer Protokoll-Mythen.",
+      "Icke konnte nie konkretes Beweismaterial vorlegen."
+    ],
+    gefahr: "Mittel. Antisemitismus-Vehikel, fördert Feindbilder. Einige Anhänger wurden gewalttätig."
+  },
+  {
+    id: 13,
+    name: "QAnon",
+    category: "politik",
+    origin: "USA, 4chan, Oktober 2017",
+    risk: "extrem",
+    belief: 14,
+    summary: "Ein geheimer Informant ('Q') behauptete, eine global operierende pädokriminelle Elite (Demokraten, Hollywood) werde von Donald Trump und Militär bekämpft. 'The Storm' werde alle Bösen verhaften.",
+    details: "Begann auf 4chan, migrierte zu 8kun. Verband Clintons, Obama, Soros und Pizzagate. Führte zu echten Angriffen: Comet Ping Pong (2016), Sturm auf das Kapitol (2021). 'Q' postete bis Dezember 2020, danach Schweigen.",
+    widerlegung: [
+      "Alle 'Q-Vorhersagen' (The Storm, Verhaftungen, Hillary-Inhaftierung) trafen nie ein.",
+      "FBI stuft QAnon als Terrorismusgefahr ein.",
+      "Metadaten-Analysen zeigen, dass 'Q' wahrscheinlich eine kleine Gruppe Personen war, kein Geheimdienstler.",
+      "Keine der behaupteten Pädophilie-Tunnel unter Pizzerien wurden je gefunden.",
+      "Journalisten, die 'Q' identifizierten: Ron Watkins (8kun-Admin) gilt als Hauptverdächtiger."
+    ],
+    gefahr: "Extrem. Direkte Gewalt, Radikalisierung, Familienzerbruch, politischer Extremismus, Sturm auf US-Parlament."
+  },
+  {
+    id: 14,
+    name: "Fluorid im Trinkwasser — Gedankenkontrolle",
+    category: "gesundheit",
+    origin: "USA, ab 1950er",
+    risk: "mittel",
+    belief: 16,
+    summary: "Fluorid werde dem Trinkwasser nicht zum Schutz der Zähne beigesetzt, sondern um die Bevölkerung gefügig zu machen, die Intelligenz zu senken oder als Giftmüllentsorgung der Industrie.",
+    details: "Entstand während des Kalten Krieges: Kommunisten sollen Fluorid verwenden, um Amerikaner zu betäuben. Später: Pharmalobby-Theorie. Manche verbinden es mit Natrium-Fluorid aus Aluminium-Industrie.",
+    widerlegung: [
+      "Fluorid-Konzentrationen im Trinkwasser (0,7 mg/L) liegen weit unter toxischen Dosen.",
+      "Zahnkaries-Reduktion durch Fluoridierung ist wissenschaftlich klar belegt (WHO, CDC).",
+      "Studien zu Fluorid und Intelligenz stammen aus China mit weit höheren Fluoridkonzentrationen.",
+      "Pharmaindustrie profitiert nicht von Fluoridierung — im Gegenteil: weniger Zahnarztbesuche.",
+      "Fluorid kommt natürlich in vielen Nahrungsmitteln vor (Tee, Fisch)."
+    ],
+    gefahr: "Mittel. Führt zu Ablehnung von Trinkwasserinfrastruktur und Fluorid-haltiger Zahnpasta, erhöht Kariesraten."
+  },
+  {
+    id: 15,
+    name: "Geheime Mondbasen der Nazis",
+    category: "astronomie",
+    origin: "Deutschland/USA, ab 1940er (Spekulationen)",
+    risk: "niedrig",
+    belief: 3,
+    summary: "Nazideutschland habe geheime Raumfahrttechnologie entwickelt und eine Basis auf dem Mond (oder in der Antarktis) errichtet. UFOs seien oft Nazi-Wunderwaffen.",
+    details: "Basiert auf realen Nazi-Raketenprogrammen (V2, Wernher von Braun) und spekuliert weiter zur Mondkolonie. Verbreitet in Science-Fiction und ernsthafter von Reichsflugscheiben-Anhängern.",
+    widerlegung: [
+      "V2-Raketen hatten bei Weitem nicht die Reichweite oder Kapazität für Mondflüge.",
+      "Von Braun und alle führenden Raketenwissenschaftler wurden von den Alliierten gefangen genommen.",
+      "Mondbasen würden durch Teleskope und Raumsonden weltweit entdeckt werden.",
+      "Antarktis-Expedition (Neuschwabenland 1938) war eine Walfang-/Ressourcen-Mission, keine Geheimbasis.",
+      "Keinerlei physische Überreste oder Dokumente belegen die Theorie."
+    ],
+    gefahr: "Gering. Fördert Verharmlosung des Nationalsozialismus als 'technologisch überlegene Kraft'."
+  },
+  {
+    id: 16,
+    name: "Pizzagate",
+    category: "politik",
+    origin: "USA, Oktober–November 2016",
+    risk: "extrem",
+    belief: 10,
+    summary: "In einer Pizzeria (Comet Ping Pong) in Washington D.C. betreibe die demokratische Politikelite ein pädophiles Netzwerk. Codewörter in Clintons E-Mails deuteten darauf hin.",
+    details: "Entstand aus gestohlenen Podesta-E-Mails (WikiLeaks). Bedeutungslose Food-Begriffe wurden als Codes für Kinder interpretiert. Dezember 2016: Edgar Maddison Welch feuerte Schüsse in das Restaurant, um 'Kinder zu befreien'. Keine wurden gefunden.",
+    widerlegung: [
+      "Das Restaurant hat keinen Keller — der angebliche Tatort existiert physisch nicht.",
+      "Polizei, FBI und unabhängige Journalisten untersuchten alle Behauptungen — keine Bestätigung.",
+      "E-Mails enthielten tatsächlich nur Pizza-Bestellungen und Partyorganisation.",
+      "Podesta-Mitarbeiter wurden direkt befragt — keine inkriminierenden Informationen.",
+      "Täter selbst sagte nach seiner Verhaftung: 'Es stimmt nicht.'"
+    ],
+    gefahr: "Extrem. Reale Schüsse, Morddrohungen, Angriffe auf Restaurantpersonal. Vorläufer von QAnon."
+  },
+  {
+    id: 17,
+    name: "HAARP — Wetterkrieg",
+    category: "technologie",
+    origin: "Alaska, USA, ab 1990er",
+    risk: "niedrig",
+    belief: 13,
+    summary: "Die HAARP-Anlage in Alaska sei keine Forschungsstation für Ionosphärenphysik, sondern eine Geheimwaffe zur Wettersteuerung, Erdbeben-Erzeugung und Gedankenkontrolle.",
+    details: "HAARP (High-frequency Active Auroral Research Program) ist eine reale US-Anlage. Jedes Naturdesaster (Erdbeben, Wirbelstürme, Tsunamis) wird von manchen mit HAARP verknüpft.",
+    widerlegung: [
+      "HAARP-Anlage ist für Forscher öffentlich zugänglich, Daten werden veröffentlicht.",
+      "Leistung der Anlage (3,6 MW) ist zu gering, um atmosphärische Massen zu bewegen.",
+      "Erdbeben entstehen aus tektonischen Spannungen — elektromagnetische Strahlung von außen hat keinen nachgewiesenen Einfluss.",
+      "Wetterphysik und Seismologie erklären alle Ereignisse durch natürliche Ursachen.",
+      "Universität Alaska Fairbanks betreibt HAARP seit 2015 — vollständig zivil."
+    ],
+    gefahr: "Gering. Führt zu Misstrauen gegenüber Wissenschaft und Militär, selten direkte Konsequenzen."
+  },
+  {
+    id: 18,
+    name: "Holocaust-Leugnung",
+    category: "geschichte",
+    origin: "Deutschland/USA, ab 1945",
+    risk: "extrem",
+    belief: 5,
+    summary: "Der Holocaust (Ermordung von ca. 6 Millionen Juden durch das NS-Regime) sei erfunden, stark übertrieben oder von Zionisten inszeniert worden.",
+    details: "In vielen Ländern strafbar. Wird von Neonazis, bestimmten islamistischen Gruppen und rechtsextremen Parteien verbreitet. Hauptargumente: keine Befehle Hitlers gefunden, Zyklon B-Verwendung angezweifelt, Totenzahlen bezweifelt.",
+    widerlegung: [
+      "Millionen Dokumente, Fotos, Zeugenaussagen, Tätergeständnisse (Nürnberger Prozesse) belegen den Holocaust.",
+      "Sterbebücher aus Konzentrationslagern, Deportationslisten und Nazi-interne Berichte sind erhalten.",
+      "Archäologische Ausgrabungen an Vernichtungsstätten bestätigen Massengräber.",
+      "Industrielle Infrastruktur (Krematorien, Gaskammern) ist baulich nachgewiesen.",
+      "Überlebende aus vielen Ländern, unabhängig voneinander, berichten konsistent."
+    ],
+    gefahr: "Extrem. Antisemitismus, Volksverhetzung, rechter Terror, Straftat in Deutschland (§130 StGB)."
+  },
+  {
+    id: 19,
+    name: "JFK-Attentat — Zweiter Schütze",
+    category: "geschichte",
+    origin: "USA, ab November 1963",
+    risk: "niedrig",
+    belief: 61,
+    summary: "Lee Harvey Oswald handelte nicht allein. Eine zweite Schützin oder ein zweiter Schütze vom 'Grassy Knoll' sei der eigentliche Mörder Kennedys. CIA, Mafia oder Kuba stecken dahinter.",
+    details: "Ist mit Abstand die älteste und verbreitetste Verschwörungstheorie der Neuzeit. Der Warren-Report (1964) kam zu dem Schluss: Oswald handelte allein. Der HSCA-Report (1979) hielt dagegen eine Verschwörung für 'wahrscheinlich', widerrief dies später. Unzählige Varianten: CIA, KGB, Mafia, Lyndon B. Johnson, kubanische Exilanten.",
+    widerlegung: [
+      "Alle Wunden an Kennedy und Connally sind ballistisch mit Schüssen aus dem Texas School Book Depository vereinbar.",
+      "Das 'magische Geschoss' ist bei korrekter Sitzanordnung physikalisch plausibel — wie Rekonstruktionen zeigen.",
+      "Oswald wurde von Jack Ruby erschossen, bevor er aussagen konnte — verstärkt Verschwörungsgefühl, beweist aber nichts.",
+      "Akustische Beweise für zweiten Schuss wurden vom National Research Council 1982 widerlegt.",
+      "Über 60 Jahre, zahllose Untersuchungen, Millionen Seiten Akten — kein zweiter Schütze je identifiziert."
+    ],
+    gefahr: "Gering. Historische Theorie ohne direkte Handlungsfolgen, fördert aber generelles Misstrauen in staatliche Institutionen."
+  },
+  {
+    id: 20,
+    name: "Area 51 — Alien-Technologie",
+    category: "astronomie",
+    origin: "USA, Nevada, ab 1950er",
+    risk: "niedrig",
+    belief: 33,
+    summary: "Auf dem geheimen Militärgelände Area 51 würden abgestürzte Alien-Raumschiffe und Außerirdische gelagert und untersucht. Der Roswell-Absturz 1947 sei vertuscht worden.",
+    details: "Area 51 ist real: eine streng geheime Luftwaffenbasis in Nevada. Dort wurden tatsächlich Hochleistungsflugzeuge wie U-2 und SR-71 in Geheimhaltung entwickelt. Der Roswell-Vorfall war ein abgestürzter Wetterballon des Project Mogul (Atomtest-Überwachung).",
+    widerlegung: [
+      "CIA-Dokumente aus 2013 bestätigen: Area 51 diente der Erprobung geheimer Aufklärungsflugzeuge (U-2, OXCART).",
+      "Roswell: US-Armee klassifizierte den Fund, weil Project Mogul geheim war — kein Alien-Beweis.",
+      "Keine physische Probe außerirdischer Technologie wurde je öffentlich oder von Whistleblowern verifiziert.",
+      "Geheimhaltung ergibt sich aus militärischer Notwendigkeit — nicht aus Alien-Versteck.",
+      "Frühere Mitarbeiter haben inzwischen über Testflüge gesprochen — konsistent mit konventioneller Erklärung."
+    ],
+    gefahr: "Gering. Harmlose Populärkultur, fördert aber UFO-Gläubigkeit und Misstrauen gegenüber Militär."
+  },
+  {
+    id: 21,
+    name: "Massenmedien — Gleichgeschaltete Lügenpresse",
+    category: "medien",
+    origin: "Deutschland, verstärkt ab 2014 (PEGIDA)",
+    risk: "hoch",
+    belief: 38,
+    summary: "Sämtliche Mainstream-Medien seien gleichgeschaltet, von Eliten oder Regierungen gesteuert und würden bewusst die Bevölkerung belügen oder manipulieren.",
+    details: "Der Begriff 'Lügenpresse' stammt aus dem 1. Weltkrieg, wurde im NS-Reich genutzt und erlebte ab 2014 eine Renaissance. Verbindet reale Kritik an Medienkonzentration mit totaler Ablehnung kritischer Berichterstattung. Führt oft dazu, dass jede unbequeme Wahrheit als 'Mainstream-Lüge' abgetan wird.",
+    widerlegung: [
+      "Medienvielfalt: Hunderte unabhängige Zeitungen, Sender, Blogger und internationale Quellen berichten täglich gegensätzlich.",
+      "Journalisten aus unterschiedlichsten politischen Lagern berichten über Regierungsversagen — quer durch alle Länder.",
+      "Pressefreiheitsindex zeigt: In Demokratien existiert nachweislich redaktionelle Unabhängigkeit.",
+      "Echte Skandale (Watergate, NSA, Wirecard) wurden von Journalisten aufgedeckt — gegen Mächtige.",
+      "Medienkonzentration ist ein reales Problem — beweist aber keine Totalsteuerung aller Inhalte."
+    ],
+    gefahr: "Hoch. Untergräbt demokratische Öffentlichkeit, immunisiert Anhänger gegen Fakten, fördert Radikalisierung."
+  },
+  {
+    id: 22,
+    name: "Freimaurerloge — Weltmacht im Verborgenen",
+    category: "esoterik",
+    origin: "Europa, 17. Jahrhundert",
+    risk: "mittel",
+    belief: 19,
+    summary: "Freimaurer seien keine harmlose Bruderschaft, sondern eine globale Geheimorganisation, die Regierungen, Gerichte und Wirtschaft im Verborgenen kontrolliere und Satanismus praktiziere.",
+    details: "Freimaurer sind eine reale, weitgehend öffentliche Organisation mit dokumentierter Geschichte. Verschwörungstheorien reichen von päpstlichen Bullen (18. Jh.) über Protokolle der Weisen von Zion bis zu modernen Illuminaten-Verbindungen. Prominent in islamischen Ländern und rechtsextremen Kreisen.",
+    widerlegung: [
+      "Freimaurerlogen sind in den meisten Ländern registrierte, öffentliche Vereine mit bekannten Mitgliedern.",
+      "Mitgliederlisten, Rituale und Geschichte sind umfangreich dokumentiert und einsehbar.",
+      "Geheimhaltung bezieht sich auf interne Rituale — nicht auf weltpolitische Pläne.",
+      "Trotz Jahrhunderten der Theorie: keine verifizierten Beweise für politische Steuerung durch Freimaurerei.",
+      "Viele Mitglieder waren politische Gegner (z.B. amerikanische Revolutionäre UND britische Kolonialisten)."
+    ],
+    gefahr: "Mittel. Antisemitismus-Verstärker, Vorwand für Verfolgung politischer Gegner in Diktaturen."
+  },
+  {
+    id: 23,
+    name: "Elvis Presley lebt",
+    category: "medien",
+    origin: "USA, ab August 1977",
+    risk: "niedrig",
+    belief: 5,
+    summary: "Elvis Presley sei am 16. August 1977 nicht gestorben, sondern habe seinen Tod fingiert, um der Öffentlichkeit zu entkommen. Er lebe unter falscher Identität.",
+    details: "Begann unmittelbar nach seinem Tod. Argumente: falsch geschriebener Name auf Grabstein ('Aron' statt 'Aaron'), Leichenfotos wirkten 'wächsern', viele 'Sichtungen' danach. Der Grabstein zeigt tatsächlich den Spitznamen; sein bürgerlicher Name war Elvis Aron Presley.",
+    widerlegung: [
+      "Obduktion wurde von mehreren Ärzten durchgeführt und bestätigte Tod durch Herzversagen.",
+      "Familienangehörige, Manager und enge Vertraute bestätigten seinen Tod — alle hätten schweigen müssen.",
+      "Drogenprobleme und massiver körperlicher Verfall in seinen letzten Jahren sind gut dokumentiert.",
+      "Keine verifizierte Sichtung je bestätigt — alle waren Verwechslungen oder Imitatoren.",
+      "DNA-Proben und zahnärztliche Unterlagen sind vorhanden und bestätigen seine Identität."
+    ],
+    gefahr: "Minimal. Harmlose Popkultur-Theorie ohne gesellschaftliche Konsequenzen."
+  },
+  {
+    id: 24,
+    name: "Chemische Kastration durch Trinkwasser / Plastik",
+    category: "gesundheit",
+    origin: "USA, ab 2000er",
+    risk: "mittel",
+    belief: 14,
+    summary: "Regierungen oder Konzerne setzten dem Trinkwasser oder Lebensmittelverpackungen absichtlich Chemikalien (Östrogen, Atrazin, BPA) zu, um Männer zu feminisieren und die Geburtenrate zu senken.",
+    details: "Alex Jones machte den Satz 'They're turning the frogs gay!' berühmt — basierend auf echten, aber missdeuteten Atrazin-Studien. BPA (Bisphenol A) ist ein realer endokriner Störer in Plastik. Daraus wird aber eine Absichtsverschwörung konstruiert.",
+    widerlegung: [
+      "Atrazin-Studien zeigen Effekte bei sehr hohen Dosen auf Amphibien — kein Beweis für absichtliche Vergiftung von Menschen.",
+      "BPA ist ein reales Problem, das reguliert wird — regulatorische Reaktion widerspricht Vertuschungstheorie.",
+      "Östrogen im Wasser stammt hauptsächlich aus natürlichen Quellen und Verhütungsmitteln — kein staatliches Programm.",
+      "Sinkende Spermienqualität ist real und wissenschaftlich diskutiert — aber auf viele Faktoren zurückzuführen.",
+      "EPA und EU regulieren Trinkwasser intensiv und unabhängig voneinander."
+    ],
+    gefahr: "Mittel. Fördert antifeministischen Backlash, Misstrauen in öffentliche Gesundheitssysteme."
+  },
+  {
+    id: 25,
+    name: "Illuminaten kontrollieren die Popindustrie",
+    category: "medien",
+    origin: "USA, ab 2000er",
+    risk: "niedrig",
+    belief: 16,
+    summary: "Popstars wie Beyoncé, Jay-Z, Rihanna oder Lady Gaga seien Mitglieder der Illuminaten und würden über Musikvideos okkulte Botschaften, Gedankenkontrolle und satanische Symbole verbreiten.",
+    details: "Basiert auf Überinterpretation von Musikvideos: Allsehendes Auge, Dreiecke, Schmetterling (angeblich MK-Ultra-Symbol). Verbindet Prominenz mit historisch realen Illuminaten (Adam Weishaupt, 1776). Sehr verbreitet in religiösen Communities.",
+    widerlegung: [
+      "Die historischen Illuminaten wurden 1785 verboten und haben keine nachgewiesene Nachfolgeorganisation.",
+      "Dreiecke und Augen sind uralte, weitverbreitete Symbole ohne spezifische Bedeutung.",
+      "Musikvideo-Ästhetik wird von Kreativdirektoren gestaltet — nicht von Geheimgesellschaften.",
+      "Kein ehemaliger Star, Manager oder Labelmitarbeiter hat je Illuminaten-Mitgliedschaft bestätigt.",
+      "Theorie immunisiert sich selbst: Leugnung gilt als 'Beweis' für Programmierung."
+    ],
+    gefahr: "Gering. Fördert religiösen Fundamentalismus, führt gelegentlich zu Veranstaltungsboykotten."
+  },
+  {
+    id: 26,
+    name: "Simulation — Wir leben in einem Computerprogramm",
+    category: "esoterik",
+    origin: "Global, ab 2003 (Nick Bostrom)",
+    risk: "niedrig",
+    belief: 11,
+    summary: "Die gesamte Realität sei eine Computersimulation, die von einer überlegenen Zivilisation oder KI betrieben werde. Das Mandela-Effekt gilt als Beweis für 'Bugs' im Programm.",
+    details: "Nick Bostroms Simulationsargument (2003) ist ein philosophisches Gedankenexperiment. Elon Musk popularisierte es. Der 'Mandela-Effekt' (kollektive Falscherinnerungen) wird als Beweis für Simulationsfehler gedeutet — ist aber ein bekanntes Gedächtnisphänomen.",
+    widerlegung: [
+      "Bostroms Argument ist ein Wahrscheinlichkeitsargument, kein Beweis — er selbst nennt es spekulativ.",
+      "Mandela-Effekt ist durch Gedächtnispsychologie erklärt: kollektive Fehlerinnerungen sind gut dokumentiert.",
+      "Eine Simulation müsste selbst physikalisch irgendwo laufen — löst das Problem nicht, verlagert es nur.",
+      "Physikalische Konstanten und Quantenmechanik zeigen keine Hinweise auf diskrete Simulationsstruktur.",
+      "Die Theorie ist prinzipiell nicht falsifizierbar — macht sie wissenschaftlich bedeutungslos."
+    ],
+    gefahr: "Gering. Philosophisch interessant, führt aber gelegentlich zu Nihilismus und Realitätsverlust."
+  },
+  {
+    id: 27,
+    name: "Princess Diana — Mord durch den Geheimdienst",
+    category: "politik",
+    origin: "Großbritannien, ab August 1997",
+    risk: "niedrig",
+    belief: 31,
+    summary: "Prinzessin Diana sei nicht durch einen Autounfall gestorben, sondern vom britischen Geheimdienst MI6 ermordet worden — weil sie einen Muslim heiraten wollte oder zu viel wusste.",
+    details: "Der Unfall geschah am 31. August 1997 im Tunnel Pont de l'Alma, Paris. Treiber Henri Paul war alkoholisiert und unter Medikamenteneinfluss. Mohamed Al-Fayed, Vater von Dianas Begleiter Dodi, trieb die Mordtheorie über Jahre an.",
+    widerlegung: [
+      "Französische und britische Untersuchungen (Operation Paget, 2006, 3 Jahre, 800 Seiten) kamen zu: Unfall.",
+      "Blutproben von Henri Paul zeigten 0,17 Promille Alkohol und Antidepressiva.",
+      "Paparazzi-Verfolgung und überhöhte Geschwindigkeit sind durch Zeugen und Techniker belegt.",
+      "Physische Untersuchung des Tunnels und Fahrzeugs ergab keine Hinweise auf Sabotage.",
+      "Al-Fayeds Klage scheiterte vor britischen Gerichten vollständig."
+    ],
+    gefahr: "Gering. Historische Theorie, fördert Misstrauen in Monarchie und britische Institutionen."
+  },
+  {
+    id: 28,
+    name: "Sandy Hook — Inszenierter Amoklauf",
+    category: "medien",
+    origin: "USA, Dezember 2012",
+    risk: "extrem",
+    belief: 8,
+    summary: "Der Amoklauf an der Sandy Hook Elementary School (20 Kinder, 6 Erwachsene getötet) sei von der Regierung inszeniert worden, um Waffengesetze zu verschärfen. Die Eltern seien 'Crisis Actors'.",
+    details: "Alex Jones verbreitete die Theorie über Jahre auf InfoWars. Betroffene Eltern wurden jahrelang von Anhängern bedroht, bespuckt und verfolgt. Jones wurde 2022 zu 1,5 Milliarden Dollar Schadensersatz verurteilt. Er gab 2022 öffentlich zu, dass Sandy Hook real war.",
+    widerlegung: [
+      "20 Kinder und 6 Erwachsene wurden identifiziert, ihre Leichen von Angehörigen gesehen, Autopsien durchgeführt.",
+      "Hunderte Ersthelfer, Krankenhausmitarbeiter, Polizisten, Lehrer — alle müssten schweigen.",
+      "Schulgebäude wurde später abgerissen und neu gebaut — auf Wunsch der Gemeinde.",
+      "Alex Jones selbst räumte in einer Verhandlung 2022 ein, dass der Anschlag real war.",
+      "US-Gericht sprach Eltern 1,5 Mrd. Dollar Schadensersatz zu — Jones bestritt die Fakten bis zuletzt."
+    ],
+    gefahr: "Extrem. Direkte Bedrohung und Verfolgung von Verbrechensopfern, Traumatisierung von Hinterbliebenen."
+  },
+  {
+    id: 29,
+    name: "Plandemic — COVID als geplante Bevölkerungskontrolle",
+    category: "gesundheit",
+    origin: "USA, April 2020",
+    risk: "extrem",
+    belief: 26,
+    summary: "Die COVID-19-Pandemie sei von einer globalen Elite (Gates, WHO, WEF) geplant worden, um Freiheiten einzuschränken, Impfstoffe zu erzwingen und digitale Überwachung einzuführen.",
+    details: "Begann mit dem viralen Video 'Plandemic' (Mai 2020) mit Judy Mikovits. Verknüpft mit 'The Great Reset' des WEF, Impfpässen als Vorbild für 'Social Credit System'. Trotz Sperrung auf YouTube millionenfach geteilt.",
+    widerlegung: [
+      "Judy Mikovits hatte gefälschte Forschungsdaten — ihr Retrovirus-Paper wurde 2011 zurückgezogen.",
+      "Pandemie-Modelle und Warnungen existierten seit Jahren (Gates-TED-Talk 2015 bezog sich auf biologische Bereitschaft).",
+      "Impfpässe gab es in Europa bereits bei Pocken, Gelbfieber — kein neues Instrument.",
+      "Lockdowns und Maßnahmen wurden von ideologisch gegensätzlichen Regierungen weltweit ergriffen.",
+      "WEF 'Great Reset' ist ein öffentliches, dokumentiertes Wirtschaftskonzept — kein Geheimplan."
+    ],
+    gefahr: "Extrem. Verhinderte Impfungen, führte zu Anschlägen auf Impfzentren, Tod durch verweigerte Behandlung."
+  },
+  {
+    id: 30,
+    name: "Tartaria — Verschwiegene Weltzivilisation",
+    category: "geschichte",
+    origin: "Internet, ab ca. 2017",
+    risk: "niedrig",
+    belief: 4,
+    summary: "Eine hochentwickelte Weltzivilisation namens 'Tartaria' sei vor wenigen Jahrhunderten durch eine Schlammflut oder Reset ausgelöscht worden. Prächtige Gebäude des 19. Jh. seien deren Überreste.",
+    details: "Behauptet, dass Weltausstellungsgebäude, Bahnhöfe und Rathäuser des 19. Jh. zu alt für ihre angebliche Bauzeit seien. Karten mit 'Tartaria' (real: historische Bezeichnung für Zentralasien) gelten als Beweis. Sehr aktiv auf Reddit und YouTube.",
+    widerlegung: [
+      "Tartaria ist ein realer historischer Begriff für die zentralasiatische Steppe — keine Geheimzivilisation.",
+      "Prunkbauten des 19. Jh. sind durch Baupläne, Rechnungen, Fotos und Augenzeugenberichte dokumentiert.",
+      "Weltausstellungsgebäude waren oft Provisorien aus Holz und Gips — nicht mysteriöse Überreste.",
+      "Archäologie, Geologie und historische Klimatologie zeigen keine globale Katastrophe im 19. Jh.",
+      "Die Theorie ignoriert oder verfälscht Primärquellen systematisch."
+    ],
+    gefahr: "Gering. Historischer Nihilismus, fördert aber Misstrauen in alle etablierten Wissenschaften."
+  },
+  {
+    id: 31,
+    name: "Bankster-Komplott — Zentralbanken als Weltkontrolle",
+    category: "politik",
+    origin: "USA, ab frühem 20. Jh.",
+    risk: "mittel",
+    belief: 33,
+    summary: "Private Zentralbanken (Federal Reserve, EZB) seien nicht staatlich, sondern im Besitz einer Handvoll Bankerfamilien (Rothschild, Rockefeller), die durch Geldschöpfung die Welt versklavten.",
+    details: "Verbindet reale Kritik an Zentralbankpolitik mit antisemitischen Rothschild-Mythen. Verbreitet durch Bücher wie 'The Creature from Jekyll Island' und durch libertäre und rechtsextreme Kreise.",
+    widerlegung: [
+      "Die Federal Reserve ist eine regulierte, staatlich überwachte Institution mit öffentlichem Mandat.",
+      "Zentralbankbilanzen werden veröffentlicht und von unabhängigen Institutionen geprüft.",
+      "Rothschild-Familie besitzt keine nachgewiesene Kontrolle über moderne Zentralbanken.",
+      "Geldschöpfung durch Geschäftsbanken ist ein realer, transparenter Prozess — kein Geheimnis.",
+      "Kritik an Zentralbankpolitik ist legitim — reicht aber nicht als Beweis für Weltverschwörung."
+    ],
+    gefahr: "Mittel. Antisemitismus-Verstärker, fördert Finanzmarkt-Irrationalismus und extremen Libertarismus."
+  },
+  {
+    id: 32,
+    name: "Vogelgrippe / H5N1 — Geplante Pandemie 2.0",
+    category: "gesundheit",
+    origin: "Global, ab 2024",
+    risk: "mittel",
+    belief: 15,
+    summary: "Die H5N1-Vogelgrippe-Warnungen seien eine inszenierte Vorbereitung auf eine neue Plandemie, um erneut Lockdowns, Impfpflicht und Kontrollmaßnahmen durchzusetzen.",
+    details: "Entstand nach echten H5N1-Ausbrüchen bei Geflügel und Rindern in den USA ab 2024. Jede wissenschaftliche Warnung wird als 'Plandemic 2.0' interpretiert. Verbreitet auf Telegram, X (Twitter) und in Anti-Impf-Communities.",
+    widerlegung: [
+      "H5N1 ist ein real existierendes Virus mit dokumentierter Sterblichkeit bei Menschen (>60% in bestätigten Fällen).",
+      "Epidemiologen warnen seit Jahrzehnten vor Pandemierisiken — unabhängig von COVID.",
+      "Frühe Warnungen vor COVID wurden ignoriert — kein Beweis für absichtliche Planung.",
+      "Regierungen haben keine koordinierten Vorboten einer erzwungenen Maßnahme gezeigt.",
+      "Überwachung von Vogelgrippe ist routinemäßige, jahrzehntelange Seuchenprävention."
+    ],
+    gefahr: "Mittel. Könnte echte Präventionsmaßnahmen bei einem potenziell gefährlichen Ausbruch sabotieren."
+  },
+  {
+    id: 33,
+    name: "Mondschein-Hotel — Stanley Kubricks Geständnis",
+    category: "medien",
+    origin: "Global, ab 2012",
+    risk: "niedrig",
+    belief: 6,
+    summary: "Stanley Kubricks 'The Shining' (1980) enthalte versteckte Geständnisse, dass er die Mondlandungsaufnahmen für die NASA gefälscht habe. Symbolische 'Beweise' sind überall im Film versteckt.",
+    details: "Popularisiert durch den Dokumentarfilm 'Room 237' (2012). Hauptargument: Danny trägt einen Apollo-11-Pullover. Raumfähre-Teppichmuster, Raumanzug-Ähnlichkeiten und Zimmernummern werden als Hinweise gedeutet.",
+    widerlegung: [
+      "Apollo-Pullover auf Danny wurde vom Kostümdesigner gewählt — keine Aussage von Kubrick dazu.",
+      "Room 237 dokumentiert Überinterpretationen — der Regisseur distanzierte sich von Verschwörungslesarten.",
+      "Kubricks Perfektionismus führte zu tausenden Details — nicht jedes ist ein Geheimbotschaft.",
+      "Mondlandungsfälschungstheorie ist bereits eigenständig widerlegt (siehe Eintrag Nr. 7).",
+      "Kubricks Familie und Mitarbeiter verneinten jeden Zusammenhang zur NASA."
+    ],
+    gefahr: "Minimal. Cinephile Überinterpretation, kaum gesellschaftliche Wirkung."
+  },
+  {
+    id: 34,
+    name: "MK-Ultra-Fortsetzung — Geheime Gedankenkontrolle heute",
+    category: "technologie",
+    origin: "USA, ab 1950er / Theorie: ab 1970er",
+    risk: "mittel",
+    belief: 21,
+    summary: "Das reale CIA-Programm MK-Ultra (Gedankenkontrollexperimente) sei nie gestoppt worden, sondern laufe weiter. Prominente, Militärveteranen oder Massenmörder seien 'programmiert'.",
+    details: "MK-Ultra ist historisch real: Die CIA führte von 1953–1973 illegale Experimente mit LSD, Hypnose und Folter durch. 1973 wurden Akten vernichtet, 1977 Kongress-Anhörungen. Die Theorie extrapoliert daraus eine lückenlose Gegenwartsprogrammierung.",
+    widerlegung: [
+      "MK-Ultra ist real und gut dokumentiert — der Sprung zu 'läuft heute weiter' ist unbewiesene Spekulation.",
+      "Überlebende und Täter von MK-Ultra haben ausgesagt — niemand bestätigte eine Fortsetzung.",
+      "Attentate werden durch Psychosen, Radikalisierung, Misshandlung erklärt — kein Programmierungsbeweis.",
+      "Nachrichtendienstliche Oversight-Komitees und unabhängige Audits fanden keine Belege.",
+      "Reale MK-Ultra-Verbrechen wurden vom Staat anerkannt und Opfer entschädigt."
+    ],
+    gefahr: "Mittel. Stigmatisiert psychisch Erkrankte als 'Programmierte', fördert Feindbilder gegenüber Geheimdiensten."
+  },
+  {
+    id: 35,
+    name: "Rothschild-Familie — Geheime Weltfinanzherrschaft",
+    category: "politik",
+    origin: "Europa, 19. Jahrhundert",
+    risk: "extrem",
+    belief: 22,
+    summary: "Die Rothschild-Familie als jüdische Bankiersdynastie kontrolliere heimlich Zentralbanken, Regierungen und Medien aller großen Länder und profitiere von Kriegen, die sie inszeniere.",
+    details: "Eines der ältesten antisemitischen Verschwörungsnarrative. Entstand nach Napoleons Kriegen. Wurde im Nationalsozialismus als Kernpropaganda genutzt. Lebt heute in modifizierter Form in NWO-, QAnon- und islamistischen Kreisen weiter.",
+    widerlegung: [
+      "Rothschild Bank ist eine mittelgroße Investmentbank — nicht unter den Top 10 weltweit.",
+      "Rothschilds Einfluss im 19. Jh. war real und groß — ist heute dokumentiert begrenzt.",
+      "Moderne Staatshaushalte werden durch gewählte Parlamente kontrolliert, nicht Privatbanken.",
+      "Historische Dokumente zeigen: Rothschilds finanzierten oft verschiedene Kriegsparteien — kein Steuerungsbeweis.",
+      "Das Narrativ ist inhaltlich identisch mit NS-Propaganda — eine historisch verhängnisvolle Analogie."
+    ],
+    gefahr: "Extrem. Antisemitismus in Reinform. Historisch direkte Verbindung zu Pogromen und Holocaust."
+  },
+  {
+    id: 36,
+    name: "JFK-Attentat — Zweiter Schütze",
+    category: "geschichte",
+    origin: "USA, ab November 1963",
+    risk: "niedrig",
+    belief: 61,
+    summary: "Lee Harvey Oswald handelte nicht allein. Ein zweiter Schütze vom 'Grassy Knoll' sei der eigentliche Mörder Kennedys. CIA, Mafia oder Kuba stecken dahinter.",
+    details: "Ist mit Abstand die älteste und verbreitetste Verschwörungstheorie der Neuzeit. Der Warren-Report (1964) kam zu dem Schluss: Oswald handelte allein. Der HSCA-Report (1979) hielt dagegen eine Verschwörung für 'wahrscheinlich', widerrief dies später. Unzählige Varianten: CIA, KGB, Mafia, Lyndon B. Johnson, kubanische Exilanten.",
+    widerlegung: [
+      "Alle Wunden an Kennedy und Connally sind ballistisch mit Schüssen aus dem Texas School Book Depository vereinbar.",
+      "Das 'magische Geschoss' ist bei korrekter Sitzanordnung physikalisch plausibel — wie Rekonstruktionen zeigen.",
+      "Oswald wurde von Jack Ruby erschossen, bevor er aussagen konnte — verstärkt Verschwörungsgefühl, beweist aber nichts.",
+      "Akustische Beweise für zweiten Schuss wurden vom National Research Council 1982 widerlegt.",
+      "Über 60 Jahre, zahllose Untersuchungen, Millionen Seiten Akten — kein zweiter Schütze je identifiziert."
+    ],
+    gefahr: "Gering. Historische Theorie ohne direkte Handlungsfolgen, fördert aber generelles Misstrauen in staatliche Institutionen."
+  },
+  {
+    id: 37,
+    name: "Area 51 — Alien-Technologie",
+    category: "astronomie",
+    origin: "USA, Nevada, ab 1950er",
+    risk: "niedrig",
+    belief: 33,
+    summary: "Auf dem geheimen Militärgelände Area 51 würden abgestürzte Alien-Raumschiffe und Außerirdische gelagert. Der Roswell-Absturz 1947 sei vertuscht worden.",
+    details: "Area 51 ist real: eine streng geheime Luftwaffenbasis in Nevada. Dort wurden tatsächlich Hochleistungsflugzeuge wie U-2 und SR-71 in Geheimhaltung entwickelt. Der Roswell-Vorfall war ein abgestürzter Wetterballon des Project Mogul (Atomtest-Überwachung).",
+    widerlegung: [
+      "CIA-Dokumente aus 2013 bestätigen: Area 51 diente der Erprobung geheimer Aufklärungsflugzeuge (U-2, OXCART).",
+      "Roswell: US-Armee klassifizierte den Fund, weil Project Mogul geheim war — kein Alien-Beweis.",
+      "Keine physische Probe außerirdischer Technologie wurde je öffentlich oder von Whistleblowern verifiziert.",
+      "Geheimhaltung ergibt sich aus militärischer Notwendigkeit — nicht aus Alien-Versteck.",
+      "Frühere Mitarbeiter haben inzwischen über Testflüge gesprochen — konsistent mit konventioneller Erklärung."
+    ],
+    gefahr: "Gering. Harmlose Populärkultur, fördert aber UFO-Gläubigkeit und Misstrauen gegenüber Militär."
+  },
+  {
+    id: 38,
+    name: "Lügenpresse — Gleichgeschaltete Medien",
+    category: "medien",
+    origin: "Deutschland, verstärkt ab 2014 (PEGIDA)",
+    risk: "hoch",
+    belief: 38,
+    summary: "Sämtliche Mainstream-Medien seien gleichgeschaltet, von Eliten oder Regierungen gesteuert und würden bewusst die Bevölkerung belügen oder manipulieren.",
+    details: "Der Begriff 'Lügenpresse' stammt aus dem 1. Weltkrieg, wurde im NS-Reich genutzt und erlebte ab 2014 eine Renaissance. Verbindet reale Kritik an Medienkonzentration mit totaler Ablehnung kritischer Berichterstattung.",
+    widerlegung: [
+      "Medienvielfalt: Hunderte unabhängige Zeitungen, Sender, Blogger und internationale Quellen berichten täglich gegensätzlich.",
+      "Journalisten aus unterschiedlichsten politischen Lagern berichten über Regierungsversagen — quer durch alle Länder.",
+      "Pressefreiheitsindex zeigt: In Demokratien existiert nachweislich redaktionelle Unabhängigkeit.",
+      "Echte Skandale (Watergate, NSA, Wirecard) wurden von Journalisten aufgedeckt — gegen Mächtige.",
+      "Medienkonzentration ist ein reales Problem — beweist aber keine Totalsteuerung aller Inhalte."
+    ],
+    gefahr: "Hoch. Untergräbt demokratische Öffentlichkeit, immunisiert Anhänger gegen Fakten, fördert Radikalisierung."
+  },
+  {
+    id: 39,
+    name: "Freimaurerloge — Weltmacht im Verborgenen",
+    category: "esoterik",
+    origin: "Europa, 17. Jahrhundert",
+    risk: "mittel",
+    belief: 19,
+    summary: "Freimaurer seien keine harmlose Bruderschaft, sondern eine globale Geheimorganisation, die Regierungen, Gerichte und Wirtschaft im Verborgenen kontrolliere.",
+    details: "Freimaurer sind eine reale, weitgehend öffentliche Organisation mit dokumentierter Geschichte. Verschwörungstheorien reichen von päpstlichen Bullen (18. Jh.) über Protokolle der Weisen von Zion bis zu modernen Illuminaten-Verbindungen.",
+    widerlegung: [
+      "Freimaurerlogen sind in den meisten Ländern registrierte, öffentliche Vereine mit bekannten Mitgliedern.",
+      "Mitgliederlisten, Rituale und Geschichte sind umfangreich dokumentiert und einsehbar.",
+      "Geheimhaltung bezieht sich auf interne Rituale — nicht auf weltpolitische Pläne.",
+      "Trotz Jahrhunderten der Theorie: keine verifizierten Beweise für politische Steuerung durch Freimaurerei.",
+      "Viele Mitglieder waren politische Gegner (z.B. amerikanische Revolutionäre UND britische Kolonialisten)."
+    ],
+    gefahr: "Mittel. Antisemitismus-Verstärker, Vorwand für Verfolgung politischer Gegner in Diktaturen."
+  },
+  {
+    id: 40,
+    name: "Elvis Presley lebt",
+    category: "medien",
+    origin: "USA, ab August 1977",
+    risk: "niedrig",
+    belief: 5,
+    summary: "Elvis Presley sei am 16. August 1977 nicht gestorben, sondern habe seinen Tod fingiert, um der Öffentlichkeit zu entkommen. Er lebe unter falscher Identität.",
+    details: "Begann unmittelbar nach seinem Tod. Argumente: falsch geschriebener Name auf Grabstein, Leichenfotos wirkten 'wächsern', viele 'Sichtungen' danach. Sein bürgerlicher Name war Elvis Aron Presley — der Grabstein zeigt den Spitznamen korrekt.",
+    widerlegung: [
+      "Obduktion wurde von mehreren Ärzten durchgeführt und bestätigte Tod durch Herzversagen.",
+      "Familienangehörige, Manager und enge Vertraute bestätigten seinen Tod — alle hätten schweigen müssen.",
+      "Drogenprobleme und massiver körperlicher Verfall in seinen letzten Jahren sind gut dokumentiert.",
+      "Keine verifizierte Sichtung je bestätigt — alle waren Verwechslungen oder Imitatoren.",
+      "DNA-Proben und zahnärztliche Unterlagen bestätigen seine Identität."
+    ],
+    gefahr: "Minimal. Harmlose Popkultur-Theorie ohne gesellschaftliche Konsequenzen."
+  },
+  {
+    id: 41,
+    name: "Illuminaten kontrollieren die Popindustrie",
+    category: "medien",
+    origin: "USA, ab 2000er",
+    risk: "niedrig",
+    belief: 16,
+    summary: "Popstars wie Beyoncé, Jay-Z oder Lady Gaga seien Mitglieder der Illuminaten und würden über Musikvideos okkulte Botschaften und Gedankenkontrolle verbreiten.",
+    details: "Basiert auf Überinterpretation von Musikvideos: Allsehendes Auge, Dreiecke, Schmetterling (angeblich MK-Ultra-Symbol). Verbindet Prominenz mit historisch realen Illuminaten (Adam Weishaupt, 1776). Sehr verbreitet in religiösen Communities.",
+    widerlegung: [
+      "Die historischen Illuminaten wurden 1785 verboten und haben keine nachgewiesene Nachfolgeorganisation.",
+      "Dreiecke und Augen sind uralte, weitverbreitete Symbole ohne spezifische Bedeutung.",
+      "Musikvideo-Ästhetik wird von Kreativdirektoren gestaltet — nicht von Geheimgesellschaften.",
+      "Kein ehemaliger Star, Manager oder Labelmitarbeiter hat je Illuminaten-Mitgliedschaft bestätigt.",
+      "Theorie immunisiert sich selbst: Leugnung gilt als 'Beweis' für Programmierung."
+    ],
+    gefahr: "Gering. Fördert religiösen Fundamentalismus, führt gelegentlich zu Veranstaltungsboykotten."
+  },
+  {
+    id: 42,
+    name: "Simulation — Wir leben in einem Computerprogramm",
+    category: "esoterik",
+    origin: "Global, ab 2003 (Nick Bostrom)",
+    risk: "niedrig",
+    belief: 11,
+    summary: "Die gesamte Realität sei eine Computersimulation einer überlegenen Zivilisation. Der Mandela-Effekt gilt als Beweis für 'Bugs' im Programm.",
+    details: "Nick Bostroms Simulationsargument (2003) ist ein philosophisches Gedankenexperiment. Elon Musk popularisierte es. Der 'Mandela-Effekt' (kollektive Falscherinnerungen) wird als Beweis für Simulationsfehler gedeutet.",
+    widerlegung: [
+      "Bostroms Argument ist ein Wahrscheinlichkeitsargument, kein Beweis — er selbst nennt es spekulativ.",
+      "Mandela-Effekt ist durch Gedächtnispsychologie erklärt: kollektive Fehlerinnerungen sind gut dokumentiert.",
+      "Eine Simulation müsste selbst physikalisch irgendwo laufen — löst das Problem nicht, verlagert es nur.",
+      "Physikalische Konstanten und Quantenmechanik zeigen keine Hinweise auf diskrete Simulationsstruktur.",
+      "Die Theorie ist prinzipiell nicht falsifizierbar — macht sie wissenschaftlich bedeutungslos."
+    ],
+    gefahr: "Gering. Philosophisch interessant, führt aber gelegentlich zu Nihilismus und Realitätsverlust."
+  },
+  {
+    id: 43,
+    name: "Princess Diana — Mord durch den Geheimdienst",
+    category: "politik",
+    origin: "Großbritannien, ab August 1997",
+    risk: "niedrig",
+    belief: 31,
+    summary: "Prinzessin Diana sei nicht durch einen Autounfall gestorben, sondern vom britischen Geheimdienst MI6 ermordet worden.",
+    details: "Der Unfall geschah am 31. August 1997 im Tunnel Pont de l'Alma, Paris. Treiber Henri Paul war alkoholisiert und unter Medikamenteneinfluss. Mohamed Al-Fayed trieb die Mordtheorie über Jahre an.",
+    widerlegung: [
+      "Französische und britische Untersuchungen (Operation Paget, 2006, 800 Seiten) kamen zu: Unfall.",
+      "Blutproben von Henri Paul zeigten 0,17 Promille Alkohol und Antidepressiva.",
+      "Paparazzi-Verfolgung und überhöhte Geschwindigkeit sind durch Zeugen und Techniker belegt.",
+      "Physische Untersuchung des Tunnels und Fahrzeugs ergab keine Hinweise auf Sabotage.",
+      "Al-Fayeds Klage scheiterte vor britischen Gerichten vollständig."
+    ],
+    gefahr: "Gering. Historische Theorie, fördert Misstrauen in Monarchie und britische Institutionen."
+  },
+  {
+    id: 44,
+    name: "Sandy Hook — Inszenierter Amoklauf",
+    category: "medien",
+    origin: "USA, Dezember 2012",
+    risk: "extrem",
+    belief: 8,
+    summary: "Der Amoklauf an der Sandy Hook Elementary School (20 Kinder, 6 Erwachsene getötet) sei von der Regierung inszeniert worden. Eltern seien 'Crisis Actors'.",
+    details: "Alex Jones verbreitete die Theorie über Jahre auf InfoWars. Betroffene Eltern wurden jahrelang bedroht und verfolgt. Jones wurde 2022 zu 1,5 Milliarden Dollar Schadensersatz verurteilt und gab öffentlich zu, dass Sandy Hook real war.",
+    widerlegung: [
+      "20 Kinder und 6 Erwachsene wurden identifiziert, ihre Leichen von Angehörigen gesehen, Autopsien durchgeführt.",
+      "Hunderte Ersthelfer, Krankenhausmitarbeiter, Polizisten, Lehrer — alle müssten schweigen.",
+      "Schulgebäude wurde später auf Wunsch der Gemeinde abgerissen und neu gebaut.",
+      "Alex Jones räumte in einer Verhandlung 2022 ein, dass der Anschlag real war.",
+      "US-Gericht sprach Eltern 1,5 Mrd. Dollar Schadensersatz zu."
+    ],
+    gefahr: "Extrem. Direkte Bedrohung und Verfolgung von Verbrechensopfern, Traumatisierung von Hinterbliebenen."
+  },
+  {
+    id: 45,
+    name: "Wahlbetrug 2020 — Gestohlene US-Wahl",
+    category: "politik",
+    origin: "USA, November 2020",
+    risk: "extrem",
+    belief: 36,
+    summary: "Die US-Präsidentschaftswahl 2020 wurde durch massiven, koordinierten Betrug gestohlen. Dominion-Wahlmaschinen, tote Wähler und Briefwahlmanipulation hätten Biden den Sieg verschafft.",
+    details: "Von Trump und Verbündeten verbreitet. Führte direkt zum Sturm auf das US-Kapitol am 6. Januar 2021. Dominion Voting Systems verklagte Fox News erfolgreich — Vergleich über 787 Millionen Dollar.",
+    widerlegung: [
+      "Über 60 Gerichtsklagen wurden abgewiesen — von republikanischen und demokratischen Richtern gleichermaßen.",
+      "William Barr (Trumps Attorney General) erklärte: kein Beweis für flächendeckenden Betrug.",
+      "Dominion-Wahlmaschinen wurden in mehreren Bundesstaaten händisch nachgezählt — gleiche Ergebnisse.",
+      "Fox News zahlte 787 Mio. Dollar Vergleich — eigene Korrespondenz belegte: man wusste, die Behauptungen waren falsch.",
+      "Staatliche Wahlbehörden, mehrheitlich von Republikanern geführt, zertifizierten das Ergebnis."
+    ],
+    gefahr: "Extrem. Sturm auf das Kapitol, anhaltende Unterminierung des Vertrauens in Demokratie."
+  },
+  {
+    id: 46,
+    name: "AIDS — Von der CIA als Biowaffe erschaffen",
+    category: "gesundheit",
+    origin: "USA/Sowjetunion, ab 1980er",
+    risk: "hoch",
+    belief: 15,
+    summary: "HIV/AIDS sei im Labor entwickelt worden — entweder vom US-Militär als Biowaffe gegen Schwarze und Homosexuelle oder von der CIA im Rahmen eines Bevölkerungsreduktionsprogramms.",
+    details: "Verbreitet sich besonders in der schwarzen amerikanischen Community (historisch begründetes Misstrauen nach Tuskegee). Sowjetische Desinformationskampagne 'Operation INFEKTION' streute die CIA-Theorie ab 1983 bewusst.",
+    widerlegung: [
+      "Genetische Analysen zeigen: HIV stammt von SIV (Affen-Immunschwächevirus) in Kamerun, übertragen ca. 1920.",
+      "Frühe HIV-Proben aus den 1950er–70ern (vor der CIA-Theorie) wurden in gelagerten Blutproben gefunden.",
+      "Viraler Evolutionsstammbaum ist lückenlos rekonstruiert — kein Labor-Eingriff erkennbar.",
+      "Operation INFEKTION wurde von KGB-Überläufern und späteren russischen Behörden selbst zugegeben.",
+      "Tuskegee-Skandal ist real und erklärt Misstrauen — beweist aber keine HIV-Erschaffung."
+    ],
+    gefahr: "Hoch. Verhindert HIV-Prävention und -Behandlung in marginalisierten Communities, erhöht Sterblichkeit."
+  },
+  {
+    id: 47,
+    name: "mRNA-Impfstoff verändert DNA dauerhaft",
+    category: "gesundheit",
+    origin: "Global, ab 2020",
+    risk: "extrem",
+    belief: 24,
+    summary: "mRNA-Impfstoffe gegen COVID-19 würden dauerhaft in die menschliche DNA eingebaut und veränderten das Erbgut — möglicherweise zur Schaffung eines kontrollierbaren Menschentypus.",
+    details: "Verbreitet durch Impfkritiker auf Social Media. Verbindet sich mit Transhumanismus-Ängsten und Bill-Gates-Microchip-Theorie.",
+    widerlegung: [
+      "mRNA wird im Zytoplasma der Zelle abgelesen — erreicht niemals den Zellkern, wo DNA liegt.",
+      "mRNA ist instabil und wird binnen Stunden bis Tagen von zellulären Enzymen abgebaut.",
+      "Reverse Transkription (mRNA → DNA) erfordert das Enzym Reverse Transkriptase — im menschlichen Körper nicht vorhanden.",
+      "mRNA-Technologie wird seit 30 Jahren erforscht — kein Fall von DNA-Integration dokumentiert.",
+      "Genetische Tests von Geimpften zeigen keinerlei veränderte DNA."
+    ],
+    gefahr: "Extrem. Massive Impfverweigerung, erhöhte COVID-Sterblichkeit, Angriffe auf Impfzentren und Ärzte."
+  },
+  {
+    id: 48,
+    name: "Große Ersetzung — Geplanter Bevölkerungsaustausch",
+    category: "politik",
+    origin: "Frankreich, Renaud Camus, 2011",
+    risk: "extrem",
+    belief: 21,
+    summary: "Eine globale Elite plane den systematischen Austausch der weißen, christlichen Bevölkerung Europas durch Migranten aus Afrika und dem Nahen Osten.",
+    details: "Renaud Camus' Buch 'Le Grand Remplacement' (2011) popularisierte den Begriff. Direktes Manifest für die Anschläge in Christchurch (2019, 51 Tote), El Paso (2019, 23 Tote) und weitere rechtsextreme Terrorakte.",
+    widerlegung: [
+      "Demografische Veränderungen durch Migration resultieren aus Wirtschaft, Krieg und Klima — kein koordinierter Plan.",
+      "Geburtenraten sinken in Europa aus wirtschaftlichen und sozialen Gründen — kein Steuerungsbeweis.",
+      "Migrationsströme entstehen aus Herkunftsland-Faktoren, nicht aus koordinierter Elite-Politik.",
+      "Die 'Elite', die angeblich steuert, ist historisch identisch mit antisemitischen Feindbildern.",
+      "Renaud Camus selbst ist mehrfach wegen Volksverhetzung verurteilt worden."
+    ],
+    gefahr: "Extrem. Direktes Terrormanifest. Mindestens drei Massaker mit insgesamt 100+ Toten berufen sich darauf."
+  },
+  {
+    id: 49,
+    name: "George Soros — Finanzier aller linken Unruhen",
+    category: "politik",
+    origin: "USA/Europa, ab 1990er",
+    risk: "hoch",
+    belief: 27,
+    summary: "George Soros finanziere gezielt politische Unruhen, Flüchtlingsströme und Regierungsstürze weltweit, um eine offene Gesellschaft als Vorbereitung zur Globalherrschaft zu erzwingen.",
+    details: "Soros ist real: ein Milliardär, der über Open Society Foundations liberale NGOs und Demokratieprojekte finanziert. Dies wird zur totalen Weltverschwörung aufgeblasen mit starker antisemitischer Codierung.",
+    widerlegung: [
+      "Open Society Foundations veröffentlicht Förderungen transparent — kein Geheimprogramm.",
+      "Soros finanziert pro-demokratische NGOs in über 100 Ländern — dokumentiert und legal.",
+      "'Migranten-Karawanen' entstanden aus eigenem Antrieb, nicht auf Soros-Befehl.",
+      "Regierungsstürze, die Soros zugeschrieben werden, hatten dokumentierte innenpolitische Ursachen.",
+      "Die Theorie ist strukturell identisch mit antisemitischen Protokoll-Mythen des 19. Jh."
+    ],
+    gefahr: "Hoch. Antisemitismus, Morddrohungen, Briefbomben 2018, politische Mobilisierung gegen Minderheiten."
+  },
+  {
+    id: 50,
+    name: "Nikola Tesla — Unterdrückte Freienergie",
+    category: "technologie",
+    origin: "USA, ab 1940er",
+    risk: "niedrig",
+    belief: 24,
+    summary: "Tesla habe eine Technologie zur kostenlosen, drahtlosen Energieversorgung der gesamten Erde entwickelt. Energiekonzerne hätten dies unterdrückt und seine Forschung vernichtet.",
+    details: "Tesla ist real und ein Genie der Elektrotechnik. Sein Wardenclyffe-Turm sollte drahtlose Energie übertragen. Das Projekt scheiterte aus finanziellen Gründen. Teslas Nachlass wurde nach seinem Tod von US-Behörden vorübergehend beschlagnahmt.",
+    widerlegung: [
+      "Wardenclyffe war für drahtlose Kommunikation konzipiert, nicht Freienergie — Teslas eigene Schriften belegen das.",
+      "Physikalische Gesetze (Thermodynamik, Energieerhaltung) erlauben keine 'Freienergie' ohne Quelle.",
+      "JP Morgan zog Finanzierung zurück, weil Marconi das Rennen um drahtlose Kommunikation gewann — wirtschaftlich, kein Komplott.",
+      "Teslas Nachlass wurde nach kurzer Sicherung freigegeben — keine dauernde Unterdrückung.",
+      "Moderne Wireless-Technologie basiert auf Teslas Ideen — kein Versteck."
+    ],
+    gefahr: "Gering. Fördert Pseudowissenschaft und Misstrauen in Energieunternehmen."
+  },
+  {
+    id: 51,
+    name: "Tartaria — Verschwiegene Weltzivilisation",
+    category: "geschichte",
+    origin: "Internet, ab ca. 2017",
+    risk: "niedrig",
+    belief: 4,
+    summary: "Eine hochentwickelte Weltzivilisation namens 'Tartaria' sei vor wenigen Jahrhunderten durch eine Schlammflut ausgelöscht worden. Prächtige Gebäude des 19. Jh. seien deren Überreste.",
+    details: "Behauptet, dass Weltausstellungsgebäude, Bahnhöfe und Rathäuser des 19. Jh. zu alt für ihre angebliche Bauzeit seien. Karten mit 'Tartaria' (real: historische Bezeichnung für Zentralasien) gelten als Beweis.",
+    widerlegung: [
+      "Tartaria ist ein realer historischer Begriff für die zentralasiatische Steppe — keine Geheimzivilisation.",
+      "Prunkbauten des 19. Jh. sind durch Baupläne, Rechnungen, Fotos und Augenzeugenberichte dokumentiert.",
+      "Weltausstellungsgebäude waren oft Provisorien aus Holz und Gips — keine mysteriösen Überreste.",
+      "Archäologie, Geologie und Klimatologie zeigen keine globale Katastrophe im 19. Jh.",
+      "Die Theorie ignoriert oder verfälscht Primärquellen systematisch."
+    ],
+    gefahr: "Gering. Historischer Nihilismus, fördert Misstrauen in alle etablierten Wissenschaften."
+  },
+  {
+    id: 52,
+    name: "MK-Ultra-Fortsetzung — Geheime Gedankenkontrolle heute",
+    category: "technologie",
+    origin: "USA, ab 1950er / Theorie: ab 1970er",
+    risk: "mittel",
+    belief: 21,
+    summary: "Das reale CIA-Programm MK-Ultra sei nie gestoppt worden, sondern laufe weiter. Prominente, Militärveteranen oder Massenmörder seien 'programmiert'.",
+    details: "MK-Ultra ist historisch real: Die CIA führte von 1953–1973 illegale Experimente mit LSD, Hypnose und Folter durch. 1973 wurden Akten vernichtet, 1977 Kongress-Anhörungen. Die Theorie extrapoliert daraus eine lückenlose Gegenwartsprogrammierung.",
+    widerlegung: [
+      "MK-Ultra ist real und gut dokumentiert — der Sprung zu 'läuft heute weiter' ist unbewiesene Spekulation.",
+      "Überlebende und Täter von MK-Ultra haben ausgesagt — niemand bestätigte eine Fortsetzung.",
+      "Attentate werden durch Psychosen, Radikalisierung, Misshandlung erklärt — kein Programmierungsbeweis.",
+      "Nachrichtendienstliche Oversight-Komitees und unabhängige Audits fanden keine Belege.",
+      "Reale MK-Ultra-Verbrechen wurden vom Staat anerkannt und Opfer entschädigt."
+    ],
+    gefahr: "Mittel. Stigmatisiert psychisch Erkrankte als 'Programmierte', fördert Feindbilder gegenüber Geheimdiensten."
+  },
+  {
+    id: 53,
+    name: "Titanic — Absichtlich versenkt für Versicherungsbetrug",
+    category: "geschichte",
+    origin: "Global, ab 1990er",
+    risk: "niedrig",
+    belief: 6,
+    summary: "Die Titanic sei absichtlich versenkt worden: Entweder war es das Schwesterschiff Olympic als Versicherungsbetrug, oder JP Morgan beseitigte damit Gegner der Federal Reserve.",
+    details: "Variante 1: Olympic-Titanic-Tausch wegen Versicherungsbetrug. Variante 2: JP Morgan lud reiche Gegner der Fed-Gründung ein und ließ sie ertrinken. JP Morgan sagte tatsächlich kurzfristig ab.",
+    widerlegung: [
+      "Titanics Wrack am Meeresboden entspricht exakt den Bauplänen der Titanic, nicht der Olympic.",
+      "Versicherungswert der Titanic deckte den Verlust nicht — kein finanzieller Vorteil für White Star Line.",
+      "JP Morgan sagte wegen Gesundheit ab — kein ungewöhnliches Ereignis für einen 74-Jährigen.",
+      "Olympic- und Titanic-Nietnummern, Metallproben und Bauzertifikate widersprechen einem Tausch.",
+      "Federal Reserve wurde erst 1913 gegründet — die angeblichen Zielgegner hatten nichts zu verhindern."
+    ],
+    gefahr: "Minimal. Historische Spekulation ohne gesellschaftliche Folgen."
+  },
+  {
+    id: 54,
+    name: "Russland-Ukraine-Krieg als NATO-Inszenierung",
+    category: "politik",
+    origin: "Russland/Global, ab Februar 2022",
+    risk: "hoch",
+    belief: 23,
+    summary: "Der russische Angriffskrieg gegen die Ukraine sei von NATO, USA und Globaleliten inszeniert oder provoziert worden — Ukraine sei nur ein Stellvertreterkrieg-Werkzeug.",
+    details: "Von russischer Staatspropaganda und westlichen Verschwörungstheoretikern gleichermaßen verbreitet. Verbindet sich mit 'Great Reset', NATO-Erweiterungsangst und Biolabor-Theorien über angebliche US-Einrichtungen in der Ukraine.",
+    widerlegung: [
+      "Russland marschierte am 24. Februar 2022 mit über 150.000 Soldaten ein — dokumentiert durch Satelliten, Journalisten, UN.",
+      "Ukraine war 2022 kein NATO-Mitglied und hatte keine gesicherte Beitrittsperspektive.",
+      "DTRA-geförderte Labore zur Seuchenprävention sind öffentlich dokumentiert — keine Biowaffen.",
+      "Kriegsverbrechen in Butscha wurden durch Satellitenbilder, DNA-Proben und internationale Ermittler belegt.",
+      "UN-Generalversammlung verurteilte den Angriff mit 141:5 Stimmen."
+    ],
+    gefahr: "Hoch. Legitimiert Aggression, untergräbt internationale Unterstützung für Ukraine, fördert Putins Informationskrieg."
+  },
+  {
+    id: 55,
+    name: "Bankster-Komplott — Zentralbanken als Weltkontrolle",
+    category: "politik",
+    origin: "USA, ab frühem 20. Jh.",
+    risk: "mittel",
+    belief: 33,
+    summary: "Private Zentralbanken (Federal Reserve, EZB) seien im Besitz einer Handvoll Bankerfamilien, die durch Geldschöpfung die Welt versklaven.",
+    details: "Verbindet reale Kritik an Zentralbankpolitik mit antisemitischen Rothschild-Mythen. Verbreitet durch libertäre und rechtsextreme Kreise.",
+    widerlegung: [
+      "Die Federal Reserve ist eine regulierte, staatlich überwachte Institution mit öffentlichem Mandat.",
+      "Zentralbankbilanzen werden veröffentlicht und von unabhängigen Institutionen geprüft.",
+      "Rothschild-Familie besitzt keine nachgewiesene Kontrolle über moderne Zentralbanken.",
+      "Geldschöpfung durch Geschäftsbanken ist ein realer, transparenter Prozess — kein Geheimnis.",
+      "Kritik an Zentralbankpolitik ist legitim — reicht aber nicht als Beweis für Weltverschwörung."
+    ],
+    gefahr: "Mittel. Antisemitismus-Verstärker, fördert Finanzmarkt-Irrationalismus und extremen Libertarismus."
+  },
+  {
+    id: 56,
+    name: "Geheime Mondbasen der Nazis",
+    category: "astronomie",
+    origin: "Deutschland/USA, Spekulation ab 1940er",
+    risk: "niedrig",
+    belief: 3,
+    summary: "Nazideutschland habe geheime Raumfahrttechnologie entwickelt und eine Basis auf dem Mond oder in der Antarktis errichtet. UFOs seien oft Nazi-Wunderwaffen.",
+    details: "Basiert auf realen Nazi-Raketenprogrammen (V2, Wernher von Braun) und spekuliert weiter zur Mondkolonie. Verbreitet in Science-Fiction und ernsthafter von Reichsflugscheiben-Anhängern.",
+    widerlegung: [
+      "V2-Raketen hatten bei Weitem nicht die Reichweite oder Kapazität für Mondflüge.",
+      "Von Braun und alle führenden Raketenwissenschaftler wurden von den Alliierten gefangen genommen.",
+      "Mondbasen würden durch Teleskope und Raumsonden weltweit entdeckt werden.",
+      "Antarktis-Expedition (Neuschwabenland 1938) war eine Walfang-/Ressourcen-Mission, keine Geheimbasis.",
+      "Keinerlei physische Überreste oder Dokumente belegen die Theorie."
+    ],
+    gefahr: "Gering. Fördert Verharmlosung des Nationalsozialismus als 'technologisch überlegene Kraft'."
+  }
+];
+
+const riskOrder = { niedrig: 1, mittel: 2, hoch: 3, extrem: 4 };
+let activeCategory = 'alle';
+let activeRisk = 'alle';
+let searchQuery = '';
+let sortMode = 'default';
+
+function buildCard(t) {
+  const catClass = `cat-${t.category}`;
+  const riskClass = `risk-${t.risk}`;
+  const riskLabel = { niedrig: 'Niedriges Risiko', mittel: 'Mittleres Risiko', hoch: 'Hohes Risiko', extrem: 'Extremes Risiko' }[t.risk];
+
+  const widerlegungItems = t.widerlegung.map(w => `<li>${w}</li>`).join('');
+
+  return `
+  <div class="card"
+       data-cat="${t.category}"
+       data-risk="${t.risk}"
+       data-name="${t.name.toLowerCase()}"
+       data-belief="${t.belief}"
+       data-id="${t.id}">
+    <div class="card-top">
+      <span class="category-tag ${catClass}">${t.category}</span>
+      <span class="risk-badge ${riskClass}">${riskLabel}</span>
+    </div>
+    <div class="card-body">
+      <h2>${t.name}</h2>
+      <p class="card-origin">Ursprung: ${t.origin}</p>
+      <p class="card-summary">${t.summary}</p>
+    </div>
+    <div class="card-sections">
+      <button class="section-toggle" onclick="toggleSection(this)">
+        <span>Details &amp; Hintergrund</span>
+        <span class="section-icon">▾</span>
+      </button>
+      <div class="section-content">${t.details}</div>
+
+      <button class="section-toggle" onclick="toggleSection(this)">
+        <span>Widerlegung &amp; Fakten</span>
+        <span class="section-icon">▾</span>
+      </button>
+      <div class="section-content">
+        <ul>${widerlegungItems}</ul>
+      </div>
+
+      <button class="section-toggle" onclick="toggleSection(this)">
+        <span>Gesellschaftliche Gefahr</span>
+        <span class="section-icon">▾</span>
+      </button>
+      <div class="section-content">
+        <span class="danger-label">⚠ Risikoeinschätzung</span>
+        ${t.gefahr}
+      </div>
+    </div>
+    <div class="belief-bar-wrap">
+      <span class="belief-label">Verbreitung (gesch.)</span>
+      <div class="belief-bar"><div class="belief-fill" style="width:${t.belief}%"></div></div>
+      <span class="belief-pct">~${t.belief}%</span>
+    </div>
+  </div>`;
+}
+
+function toggleSection(btn) {
+  btn.classList.toggle('open');
+  const content = btn.nextElementSibling;
+  content.classList.toggle('visible');
+}
+
+function render() {
+  const grid = document.getElementById('grid');
+  const noResults = document.getElementById('no-results');
+
+  let filtered = theories.filter(t => {
+    const catOk = activeCategory === 'alle' || t.category === activeCategory;
+    const riskOk = activeRisk === 'alle' || t.risk === activeRisk;
+    const searchOk = !searchQuery || t.name.toLowerCase().includes(searchQuery) || t.summary.toLowerCase().includes(searchQuery);
+    return catOk && riskOk && searchOk;
+  });
+
+  if (sortMode === 'risk-asc') filtered.sort((a,b) => riskOrder[a.risk] - riskOrder[b.risk]);
+  else if (sortMode === 'risk-desc') filtered.sort((a,b) => riskOrder[b.risk] - riskOrder[a.risk]);
+  else if (sortMode === 'belief-desc') filtered.sort((a,b) => b.belief - a.belief);
+  else if (sortMode === 'name-asc') filtered.sort((a,b) => a.name.localeCompare(b.name, 'de'));
+
+  // Remove old cards (not controls)
+  grid.querySelectorAll('.card').forEach(c => c.remove());
+  noResults.style.display = 'none';
+
+  if (filtered.length === 0) {
+    noResults.style.display = 'block';
+  } else {
+    filtered.forEach((t, i) => {
+      const div = document.createElement('div');
+      div.innerHTML = buildCard(t);
+      const card = div.firstElementChild;
+      card.style.animationDelay = (i * 0.04) + 's';
+      grid.insertBefore(card, noResults);
+    });
+  }
+
+  document.getElementById('total-count').textContent = theories.length;
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn[data-type="cat"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn[data-type="cat"]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeCategory = btn.dataset.filter;
+    render();
+  });
+});
+
+document.querySelectorAll('.filter-btn[data-type="risk"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn[data-type="risk"]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeRisk = btn.dataset.filter;
+    render();
+  });
+});
+
+document.getElementById('sort-select').addEventListener('change', e => {
+  sortMode = e.target.value;
+  render();
+});
+
+document.getElementById('search-input').addEventListener('input', e => {
+  searchQuery = e.target.value.toLowerCase().trim();
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
